@@ -57,3 +57,5 @@ class EoS(ABC):
         :param T: temperature [T]
         :return: (a, b) or (a*alpha, b) in the case of temperature dependent EoS at given T
         """
+
+
