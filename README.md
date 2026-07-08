@@ -1,12 +1,12 @@
-# thermopy
+# Thermopy
 A simple python library  for modelling the thermodynamic properties of pure fluids using cubic equations of state
 
-## current features
+## Current features
 - Peng-Robinson equation of state
 - compressibility factor solver
 - pressure volume isotherms
 
-## planned features
+## Planned features
 - More EoS functions
   - SRK, VdW etc
 - Fugacity coefficients
