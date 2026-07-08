@@ -1,9 +1,0 @@
-pyproject.toml
-src/thermopy/__init__.py
-src/thermopy/constants.py
-src/thermopy.egg-info/PKG-INFO
-src/thermopy.egg-info/SOURCES.txt
-src/thermopy.egg-info/dependency_links.txt
-src/thermopy.egg-info/top_level.txt
-src/thermopy/eos/base.py
-src/thermopy/species/species.py
