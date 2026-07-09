@@ -8,7 +8,6 @@ A simple python library  for modelling the thermodynamic properties of pure flui
 
 ## Planned features
 - More EoS functions
-  - SRK, VdW etc
-- Fugacity coefficients
+  - SRK, non cubic EoS etc
 - Departure functions
 - VLE Calulations
