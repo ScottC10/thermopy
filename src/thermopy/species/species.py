@@ -1,4 +1,20 @@
 #single file in folder in case of change to JSON database and generalised class for species
+from dataclasses import dataclass
+from typing import TypedDict, NotRequired
+
+class CpCoeffs(TypedDict):
+    a : float
+    b: float
+    c: float
+    d: float
+
+class entry(TypedDict):
+    formula : str
+    Tc      : float
+    Pc      : float
+    omega   : float
+    MW      : float
+    Cp_coeffs : NotRequired[CpCoeffs]
 
 
 """
@@ -11,10 +27,7 @@ All species in database must include:
     -molecular weight                       : float
     -heat capacity correlation coefficients : dict
 """
-
-
-
-SPECIES_DATA = {
+SPECIES_DATA: dict[str, entry] = {
     "methane" : {
         "formula" : "CH4",
         "Tc"    : 190.6,
@@ -31,3 +44,50 @@ SPECIES_DATA = {
         "MW"    : 18.015
     }
 }
+@dataclass(frozen=True)
+class CpCoefficients:
+    a : float
+    b : float
+    c : float
+    d : float
+@dataclass(frozen=True)
+class Species:
+
+    formula : str
+    Tc : float
+    Pc : float
+    omega : float
+    MW : float
+    Cp_coeffs : CpCoefficients | None
+
+
+
+def get_species(species:str) -> Species:
+    cur_species = SPECIES_DATA[species]
+
+    if "Cp_coeffs" in cur_species:
+        return Species(
+            formula=cur_species.get("formula"),
+            Tc=cur_species.get("Tc"),
+            Pc=cur_species.get("Pc"),
+            omega=cur_species.get("omega"),
+            MW=cur_species.get("MW"),
+
+            Cp_coeffs=CpCoefficients(
+                a=cur_species["Cp_coeffs"]["a"],
+                b=cur_species["Cp_coeffs"]["b"],
+                c=cur_species["Cp_coeffs"]["c"],
+                d=cur_species["Cp_coeffs"]["d"]
+            )
+
+        )
+    else:
+        return Species(
+            formula=cur_species.get("formula"),
+            Tc=cur_species.get("Tc"),
+            Pc=cur_species.get("Pc"),
+            omega=cur_species.get("omega"),
+            MW=cur_species.get("MW"),
+            Cp_coeffs=None
+        )
+
