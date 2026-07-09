@@ -81,7 +81,7 @@ class CubicEoS(EoS):
             1,
             ((self.epsilon + self.sigma - 1) * B - 1),
             (A - (self.epsilon + self.sigma) * B + (self.epsilon * self.sigma - self.epsilon - self.sigma) * B ** 2),
-            (A * B + self.epsilon * self.sigma * B ** 2 * (1 + B))
+            -(A * B + self.epsilon * self.sigma * B ** 2 * (1 + B))
         ]
         roots = np.roots(coeffs)
         roots = roots[np.abs(roots.imag) < 1e-10]

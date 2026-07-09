@@ -29,7 +29,3 @@ class PengRobinson(CubicEoS):
         alpha = (1 + k * (1 - np.sqrt(T / self.Tc))) ** 2
         return a*alpha, b
 
-
-
-PR = PengRobinson("methane")
-PR.get_species()
