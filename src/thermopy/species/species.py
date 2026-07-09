@@ -32,7 +32,7 @@ SPECIES_DATA: dict[str, entry] = {
         "formula" : "CH4",
         "Tc"    : 190.6,
         "Pc"    : 4599000,
-        "omega" : 0.012,
+        "omega" : 0.011,
         "MW"    : 16.043,
         "Cp_coeffs":{"a":19.25,"b":5.213e-2,"c":1.197e-5,"d":-1.132e-8}
     },
