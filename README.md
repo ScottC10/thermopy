@@ -5,6 +5,7 @@ A simple python library  for modelling the thermodynamic properties of pure flui
 - Peng-Robinson equation of state
 - compressibility factor solver
 - pressure volume isotherms
+- fugacity coefficient solver (analytic for CubicEoS, numerical otherwise)
 
 ## Planned features
 - More EoS functions
