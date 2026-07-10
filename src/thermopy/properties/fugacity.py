@@ -2,7 +2,10 @@
 from thermopy.constants import R
 from scipy.integrate import quad
 import numpy as np
-from thermopy.eos import EoSResult, CubicEoS
+from thermopy.eos import EoSResult, EoS, CubicEoS
+from typing import Union
+from thermopy.species import get_species
+
 
 """
 A generic numerical fugacity coefficient solver using volume explicit departure integral:
@@ -14,26 +17,53 @@ A generic numerical fugacity coefficient solver using volume explicit departure 
 """
 
 
-def coefficient(state : EoSResult, EoS : CubicEoS ):
+def coefficient(state : EoSResult, EoS : Union[EoS, CubicEoS], cubicEoS=False):
     '''
+    A numerical solver for fugacity in the absence of any analytical solution for the used EoS, default solver
+    is numerical unless cubicEoS = true
     Uses fugacity coefficient definition from chemical potentials: ln(phi) = 1/RT * int(inf->V)[(RT/V)-P]dV + (Z-1) -ln(Z)
     :param state: EoS result at a T and P
     :param EoS: the EoS used to generate the T and P
+    :param cubicEoS: bool deciding which solve method is used default = False
     :return: fugacity coefficient
     '''
+    species = get_species(EoS.species)
+
+
+
+    if cubicEoS:
+        """
+        General cubic EoS result taken from: Introduction to Chemical Engineering Thermodynamics 
+                                             (J.M. Smith, H.C. Van Ness, M.M. Abbott, M.T. Swihart)
+        
+        """
+        #state parameters
+        T = state.T
+        P = state.P
+        Z = state.Z
+
+        #Cubic EoS parameters
+        a, b = EoS._cubic_parameters(T)
+        beta = (b * P) / (R * T)
+        q = a / (b * R * T)
+        I = (1/EoS.sigma - EoS.epsilon) * np.log((Z + EoS.sigma * beta) / (Z + EoS.epsilon * beta))
+
+        ln_phi = Z - 1
+        ln_phi += -np.log(Z-beta)
+        ln_phi += -q * I
+
+        return np.exp(ln_phi)
+
+
+
+
+
     T = state.T
     V = state.V
     Z = state.Z
     P = state.P
     V_ideal = (R*T)/P
     V_inf = 10000*V_ideal
-
-    # def integrand(V_prime):
-    #     return(
-    #             ((R*T)/V_prime) - EoS.P_from_TV(T, V_prime)
-    #     )
-
-    # integral, _ = quad(integrand, V, V_inf)
 
     """Integrates over log space to allow better resolution for liquid phase where contributions matter at small vol"""
     def integrand_log(x):
@@ -53,9 +83,6 @@ def coefficient(state : EoSResult, EoS : CubicEoS ):
     # print("Z-1:", Z - 1)
     # print("-lnZ:", -np.log(Z))
     # print("lnphi:", ln_phi)
-
-
-
 
     return np.exp(ln_phi)
 

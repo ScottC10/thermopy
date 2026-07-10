@@ -56,6 +56,9 @@ class EoS(ABC):
 
 
 class CubicEoS(EoS):
+    PSI = None
+    OMEGA = None
+
     sigma = None
     epsilon = None
     def solve(self, T, P):
