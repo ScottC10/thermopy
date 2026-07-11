@@ -46,7 +46,7 @@ def coefficient(state : EoSResult, EoS : Union[EoS, CubicEoS], cubicEoS=False):
         a, b = EoS._cubic_parameters(T)
         beta = (b * P) / (R * T)
         q = a / (b * R * T)
-        I = (1/EoS.sigma - EoS.epsilon) * np.log((Z + EoS.sigma * beta) / (Z + EoS.epsilon * beta))
+        I = (1/(EoS.sigma - EoS.epsilon)) * np.log((Z + EoS.sigma * beta) / (Z + EoS.epsilon * beta))
 
         ln_phi = Z - 1
         ln_phi += -np.log(Z-beta)

@@ -25,7 +25,7 @@ All species in database must include:
     -critical pressure [Pa]                 : float
     -pitzer acentric factor omega           : float
     -molecular weight                       : float
-    -heat capacity correlation coefficients : dict
+    -heat capacity correlation coefficients : dict (Shomate Equation)
 """
 SPECIES_DATA: dict[str, entry] = {
     "methane" : {
@@ -42,6 +42,14 @@ SPECIES_DATA: dict[str, entry] = {
         "Pc"    : 22055000,
         "omega" : 0.345,
         "MW"    : 18.015
+    },
+    "hydrogen sulphide" :{
+        "formula" : "H2S",
+        "Tc"      : 373.5,
+        "Pc"      : 8963000,
+        "omega"   : 0.094,
+        "MW"      : 34.082,
+        "Cp_coeffs" : {"a":26.88412, "b":18.67809/(1000), "c":3.434203/(1000**2), "d": -3.378702/(1000**3)} #Valid 298<T<1400
     }
 }
 @dataclass(frozen=True)
@@ -63,8 +71,11 @@ class Species:
 
 
 def get_species(species:str) -> Species:
-    cur_species = SPECIES_DATA[species]
-
+    try:
+        cur_species = SPECIES_DATA[species]
+    except KeyError:
+        keys=[key for key in SPECIES_DATA]
+        raise Exception(f"{species} is not an available species. Available species: {keys}")
     if "Cp_coeffs" in cur_species:
         return Species(
             formula=cur_species.get("formula"),
