@@ -81,9 +81,10 @@ def residual_entropy(state : EoSResult, EoS : Union[EoS, CubicEoS], cubicEoS=Fal
         if isinstance(EoS, VanDerWaals):
             return -R*np.log(V/(V-b)) + R*np.log(Z)
 
-        term1 = R * np.log(V/(V-b))
-        term2 = (dadt/(b *(EoS.sigma - EoS.epsilon))) * np.log( (V + EoS.epsilon*b) / (V + EoS.sigma*b))
-        return term1 - term2
+        term1 = -R*np.log(V/(V-b))
+        term2 = -dadt/(b*(EoS.sigma-EoS.epsilon)) *np.log((V+EoS.epsilon*b)/(V+EoS.sigma*b))
+
+        return term1 + term2 + R*np.log(Z)
 
 
 
@@ -104,7 +105,7 @@ def residual_entropy(state : EoSResult, EoS : Union[EoS, CubicEoS], cubicEoS=Fal
 
     return integral + R*np.log(Z)
 
-def residual_gibbs(state : EoSResult, EoS : Union[EoS, CubicEoS]) -> float:
+def residual_gibbs(state : EoSResult, EoS : Union[EoS, CubicEoS], cubicEoS = False) -> float:
     '''
 
     Uses residual gibbs definition G^R = H^R - TS^R, if EoS used is cubic, analytical result used.
@@ -117,11 +118,7 @@ def residual_gibbs(state : EoSResult, EoS : Union[EoS, CubicEoS]) -> float:
     :return: The residual gibbs free energy
     '''
     T = state.T
-
-    if isinstance(EoS, CubicEoS):
-        is_cubic = True
-    else:
-        is_cubic = False
+    is_cubic = cubicEoS
     h = residual_enthalpy(state, EoS, cubicEoS=is_cubic)
     s = residual_entropy(state, EoS, cubicEoS=is_cubic)
 
