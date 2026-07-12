@@ -1,14 +1,17 @@
 # Thermopy
-A simple python library  for modelling the thermodynamic properties of pure fluids using cubic equations of state
+A equation of state centered library for exploring the thermodynamic properties of fluids through various models
 
 ## Current features
 - Peng-Robinson equation of state
 - compressibility factor solver
 - pressure volume isotherms
-- fugacity fugacity_coefficient solver (analytic for CubicEoS, numerical otherwise)
+- fugacity coefficient solver (analytic for CubicEoS, numerical otherwise)
+- departure function methods
+    -General numeric method via finite difference, analytical solutions for CubicEoS
+    -Methods for $G^R$, $H^R$, $S^R$
 
 ## Planned features
 - More EoS functions
   - SRK, non cubic EoS etc
-- Departure functions
+- More Expansive Species database
 - VLE Calulations
