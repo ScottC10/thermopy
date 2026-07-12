@@ -17,7 +17,7 @@ A generic numerical fugacity coefficient solver using volume explicit departure 
 """
 
 
-def coefficient(state : EoSResult, EoS : Union[EoS, CubicEoS], cubicEoS=False):
+def fugacity_coefficient(state : EoSResult, EoS : Union[EoS, CubicEoS], cubicEoS=False):
     '''
     A numerical solver for fugacity in the absence of any analytical solution for the used EoS, default solver
     is numerical unless cubicEoS = true

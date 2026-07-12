@@ -103,5 +103,16 @@ class CubicEoS(EoS):
         :param T: temperature [T]
         :return: (a, b) or (a*alpha, b) in the case of temperature dependent EoS at given T
         """
+        pass
+
+    @abstractmethod
+    def _da_dT(self, T):
+        """
+        finds the derivative of the temperature dependent a(T) function
+        specific to each cubicEoS (required for departure functions)
+        :param T: Temperature
+        :return: da/dT
+        """
+        pass
 
 

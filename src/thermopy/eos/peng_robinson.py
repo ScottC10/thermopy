@@ -29,3 +29,13 @@ class PengRobinson(CubicEoS):
         alpha = (1 + k * (1 - np.sqrt(T / self.Tc))) ** 2
         return a*alpha, b
 
+    def _da_dT(self, T):
+        tr = T/self.Tc
+        j = self.PSI * (R**2 * self.Tc**2)/self.Pc
+        k = (0.37464 + 1.54226*self.acentric -0.269928*self.acentric**2)
+
+        alpha_prime = (k *(k* tr**(1/2) - k -1)) / (self.Tc * tr**(1/2))
+
+        return j * alpha_prime
+
+

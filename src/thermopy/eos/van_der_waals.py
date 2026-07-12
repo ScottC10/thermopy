@@ -30,6 +30,9 @@ class VanDerWaals(CubicEoS):
         a, b = self._cubic_parameters(T)
         return (R*T)/(V-b) - a/((V+self.epsilon*b)*(V+self.sigma*b))
 
+    def _da_dT(self, T):
+        #VdW does not have a temperature dependence
+        pass
 
 
 
