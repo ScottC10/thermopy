@@ -5,9 +5,8 @@ A equation of state centered library for exploring the thermodynamic properties 
 - Peng-Robinson equation of state
 - compressibility factor solver
 - pressure volume isotherms
-- fugacity coefficient solver (analytic for CubicEoS, numerical otherwise)
+- fugacity coefficient solver 
 - departure function methods
-    -General numeric method via finite difference, analytical solutions for CubicEoS
     -Methods for $G^R$, $H^R$, $S^R$
 
 ## Planned features
